@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dept.DeptMapper4">
+	
+	<select id="multiSelect" parameterType="java.util.List" resultType="Dept">
+	select deptno, dname, loc from dept where deptno IN 
+	<foreach item="item" index="index" collection="list" open="("
+	separator="," close=")">
+	#{item}	
+	</foreach>
+	</select>
+	
+	
+	<select id="multiUpdate" parameterType="java.util.List" resultType="Dept">
+	update dept set loc='제주' where deptno IN 
+	<foreach item="item" index="index" collection="list" open="("
+	separator="," close=")">
+	#{item}	
+	</foreach>
+	</select>
+	
+	<delete id="delete4" parameterType="java.util.List">
+	delete from dept where loc IN
+	<foreach item="item" index="index" collection="list" open="("
+	separator="," close=")">
+	#{item}
+	</foreach>	
+	</delete>
+	
+	<delete id="delete5" parameterType="java.util.List">
+	delete from dept where loc IN
+	<foreach item="item" index="index" collection="list" open="("
+	separator="," close=")">
+	#{item.deptno}  <!-- dept객체의 deptno사용 -->
+	</foreach>	
+	</delete>
+	
+	<insert id="multiInsert" parameterType="java.util.List">
+	insert all
+	<foreach item="item" index="index" collection="list">
+	 into dept (deptno, dname, loc) values 
+	   (#{item.deptno}, #{item.dname}, #{item.loc} )
+	</foreach>	
+	select * from dual
+	</insert>
+	
+	
+	<select id="topN" resultType="Dept">
+	select deptno, dname, loc from dept order by 1 asc
+	</select>
+</mapper>
+<!--dname과 loc가 둘 다 낫널
+중간에 앤드
+마이바티스 홈페이지에 동적 sql 작성문 참고해서 만들것  -->

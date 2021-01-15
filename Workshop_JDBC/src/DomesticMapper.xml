@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dept.DomesticMapper">
+
+	<select id="select" resultType="com.dto.Domestic">
+	 <![CDATA[
+	 select PDSUBNAME, PDCOST, PDPRICE FROM product where PDCOST > (SELECT MIN(PDCOST) from product WHERE PDNAME ='TV') AND PDCOST < (SELECT MAX(PDCOST) from product WHERE PDNAME ='CELLPHONE')
+	]]>
+	</select>
+
+	<select id="selectAllHash" resultType="HasHMap">
+		select deptno, dname, loc from dept
+	</select>
+
+</mapper>
+

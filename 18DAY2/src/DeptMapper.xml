@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.BlogMapper">
+	<select id="selectAll" resultType="com.dto.Dept"> <!-- DAO로 이동 -->
+	<!-- id=selectAll 실행 후 결과를 resultType으로 저장 -->
+	select deptno, dname, loc from dept <!-- 레드 하나하나를 6행으로 전달 -->
+	</select>
+	
+	<select id="selectByDeptno" resultType="com.dto.Dept">
+		select deptno, dname, loc from dept where deptno=10
+	</select>
+	
+	
+	<select id="selectByDeptnoUse" parameterType="int" resultType="com.dto.Dept"> <!-- selectOne 사용 -->
+		select deptno, dname, loc from dept where deptno= #{deptno} <!-- #은 찾고자 하는 번호를 입력하기위해 설정해줌 -->
+	</select>
+	
+</mapper>

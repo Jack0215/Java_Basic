@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="employee">
+
+	<!-- 1번 -->
+	<select id="selectAllEmployee" resultType="hashmap">
+		select
+		empno,ename,dname,loc,sal,to_char(hiredate,'YYYY-MM-DD') hiredate,state
+		from employee order by empno
+	</select>
+	<!-- 2번 -->
+	<select id="searchList" parameterType="hashmap"
+		resultType="hashmap"> <!-- 결과를 resultType에 저장 , 결과를 담을 Model Class 지정  -->
+		select empno,ename,dname,loc,sal,to_char(hiredate,'YYYY-MM-DD') hiredate,state
+		from employee <!-- 검색했을 경우 모든 컬럼이 출력돼야 한다. -->
+		<!-- if 사용 -->
+		<if test="inputSubMenu ==1">
+			where empno = #{searchWord} <!-- #{} = sql문 실행 , 실행 조건은  searchWord-->
+		</if>
+		<if test="inputSubMenu ==2">
+			where ename = #{searchWord}
+		</if>
+		<if test="inputSubMenu ==3">
+			where dname = #{searchWord}
+		</if>
+		<if test="inputSubMenu ==4">
+			where loc = #{searchWord}
+		</if>
+		<if test="inputSubMenu ==5">
+			where sal = #{searchWord}
+		</if>
+	</select>
+	
+	<!-- 3번 -->
+	<select id="createEmployeeNum" resultType="int">
+		select NVL(max(empno),0) + 1 as num <!-- as는 테이블 이름을 num으로 설정하도록한다. -->
+		from employee <!-- employee 안에서 empno중 가장 큰 값의 +1을 추가해서 가져온다. -->
+	</select>
+
+	<insert id="employeeInsert" parameterType="hashmap">
+		insert into employee ( empno,ename,dname,loc,sal,hiredate,state)
+		values( #{empno} , #{ename} , #{dname} , #{loc} , #{sal}, #{hiredate} ,
+		#{state} )
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+

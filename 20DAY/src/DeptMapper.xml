@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dept.DeptMapper">
+
+	<select id="recordCount" resultType="int">
+		select count(*) from dept
+	</select>
+
+	<select id="selectByHashmap" resultType="Dept"
+		parameterType="HashMap">
+		select deptno, dname, loc from dept where deptno between #{Key1} and #{Key2}
+	</select>
+
+	<select id="selectBydeptNoIn" resultType="Dept"	 parameterType="HashMap">
+		select deptno, dname, loc from dept where deptno IN (#{Key1}, #{Key2}, #{Key3})
+	</select>
+
+</mapper>
+
